@@ -2,13 +2,13 @@
 
 ## Python results
 ### 1. Cell Type Annotation (UMAP Plot)
-The first UMAP plot (celltypist_cell_label_coarse) displays the clustering of cells with their coarse annotations. The dataset contains a variety of immune and stromal cell types. The key highlights include:
+#### The first UMAP plot (celltypist_cell_label_coarse) displays the clustering of cells with their coarse annotations. The dataset contains a variety of immune and stromal cell types. The key highlights include:
 
-  Immune Cells: There is a substantial presence of T cells (e.g., Tcm/Naive cytotoxic T cells, Tcm/Naive helper T cells), NK cells (CD16+ and CD16-), B cells (B cells, Naive B cells, Small pre-B cells), and macrophage populations (e.g., Classical monocytes, Macrophages).
-  Progenitors and Precursors: The dataset includes hematopoietic stem cells/multipotent progenitors (HSC/MPP) and various early erythroid and myeloid precursors (e.g., Early erythroid, Early lymphoid/T lymphoid, DC precursor).
-  Specialized Cell Types: Several specialized immune cell populations are annotated, such as Type 17 helper T cells, ILC3, and Mast cells.
-  Non-Immune Cells: The presence of epithelial cells and fibroblasts suggests that this dataset might include cells from tissue samples, not just peripheral blood.
-  The diversity of cell types suggests a comprehensive sampling, possibly from a heterogeneous tissue environment.
+##### Immune Cells: There is a substantial presence of T cells (e.g., Tcm/Naive cytotoxic T cells, Tcm/Naive helper T cells), NK cells (CD16+ and CD16-), B cells (B cells, Naive B cells, Small pre-B cells), and macrophage populations (e.g., Classical monocytes, Macrophages).
+##### Progenitors and Precursors: The dataset includes hematopoietic stem cells/multipotent progenitors (HSC/MPP) and various early erythroid and myeloid precursors (e.g., Early erythroid, Early lymphoid/T lymphoid, DC precursor).
+##### Specialized Cell Types: Several specialized immune cell populations are annotated, such as Type 17 helper T cells, ILC3, and Mast cells.
+##### Non-Immune Cells: The presence of epithelial cells and fibroblasts suggests that this dataset might include cells from tissue samples, not just peripheral blood.
+##### The diversity of cell types suggests a comprehensive sampling, possibly from a heterogeneous tissue environment.
 
 ### 2. Confidence Scores (UMAP Plot)
 The second UMAP plot (celltypist_conf_score_coarse) visualizes the confidence score of the annotations, ranging from 0 to 1 (low to high). Key observations:
