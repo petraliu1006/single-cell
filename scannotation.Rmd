@@ -1,0 +1,106 @@
+---
+title: "sc annotation"
+output: html_document
+date: "2024-11-17"
+---
+
+```{r}
+library(BiocManager)
+library(SingleR)
+
+# Sys.setenv(LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib")
+# Sys.setenv(CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include")
+# Sys.setenv(PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig")
+# 
+# # Install alabaster.base from source with specific configuration
+# BiocManager::install("alabaster.base", configure.args="--with-openssl-include=/opt/homebrew/opt/openssl@3/include --with-openssl-lib=/opt/homebrew/opt/openssl@3/lib", force = TRUE)
+# 
+# # Install celldex
+# BiocManager::install("celldex")
+
+library(celldex)
+library(curl) 
+library(Matrix)
+library(Seurat) 
+library(tidyverse)
+library(pheatmap)
+
+library(zellkonverter)
+library(SingleCellExperiment)
+library(reticulate)
+
+
+# Read the .h5ad file
+file_path <- "All_subset.h5ad"
+sce <- readH5AD(file_path)
+
+ # Explore the data
+sce
+colnames(sce)
+assayNames(sce)
+
+
+```
+
+```{r}
+counts_matrix <- assay(sce, "counts")
+pbmc.seurat<- CreateSeuratObject(counts = counts_matrix)
+pbmc.seurat$mitoPercent <- PercentageFeatureSet(pbmc.seurat,pattern = '^MT-')
+pbmc.seurat.filtered<- subset(pbmc.seurat, subset=nCount_RNA > 800 & nFeature_RNA > 500 & mitoPercent< 10)
+
+pbmc.seurat.filtered <- NormalizeData(object = pbmc.seurat.filtered)
+pbmc.seurat.filtered <- FindVariableFeatures(object = pbmc.seurat.filtered)
+pbmc.seurat.filtered<- ScaleData(object = pbmc.seurat.filtered)
+pbmc.seurat.filtered<- RunPCA(object = pbmc.seurat.filtered)
+pbmc.seurat.filtered<- FindNeighbors(object = pbmc.seurat.filtered, dims = 1:20)
+pbmc.seurat.filtered<- FindClusters(object = pbmc.seurat.filtered)
+pbmc.seurat.filtered<- RunUMAP(object = pbmc.seurat.filtered, dims = 1:20)
+
+View(pbmc.seurat.filtered@meta.data)
+DimPlot(object = pbmc.seurat.filtered,reduction = 'umap')
+
+
+```
+
+```{r}
+ref<- celldex::HumanPrimaryCellAtlasData()
+View(as.data.frame(colData(ref)))
+
+pbmc_counts<- GetAssayData(pbmc.seurat.filtered, slot = 'counts')
+pref <- SingleR(test = pbmc_counts,
+                ref = ref,
+                labels = ref$label.main)
+
+pbmc.seurat.filtered$singleR.labels <- pref$labels[match(rownames(pbmc.seurat.filtered@meta.data),rownames(pref))]
+DimPlot(pbmc.seurat.filtered, reduction = 'umap', group.by = 'singleR.labels')
+
+```
+
+```{r}
+#correlation of each cell with labels 
+pref$scores
+
+#determin whether the cell type assignments are unambiguous
+library(viridis)
+plotScoreHeatmap(pref) #each column is one cell, rows are labels,
+
+
+```
+
+```{r}
+#outliners to indicate unambiguous assignments
+plotDeltaDistribution(pref)
+
+```
+
+
+```{r}
+# unsupervised clustering : discover new variation
+#compare cell type assignment with unsupervised clustering-->  indication of finer subdivisions cell types 
+# ambiguity of cell type assignment when comparing with cell type assignment, eg: column 19 has colors in different cell types -->group based on similarities--> grouping does not match with label
+tab<- table(Assigned = pref$labels, Clusters=pbmc.seurat.filtered$seurat_clusters)
+pheatmap(log10(tab+10),color = colorRampPalette(c('white','blue'))(10))
+```
+
+
+
