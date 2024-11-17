@@ -27,3 +27,19 @@
 
 ### Overall Interpretation
 Your dataset appears to be well-annotated with diverse immune cell populations, along with some stromal and progenitor cells. The UMAP visualizations and dendrogram provide a coherent view of cellular diversity and relationships, suggesting that your annotation process was effective in capturing the main cell types and their respective lineages. However, the areas with lower confidence annotations might benefit from further refinement or additional reference datasets for improved classification.
+
+
+## R results
+### 1. UMAP Plot with SingleR Labels
+#### The UMAP plot displays the clustering and annotation of cells into various cell types based on SingleR predictions.
+* Observations:
+* Cells are grouped into distinct clusters representing different cell types such as Astrocytes, T cells, Endothelial cells, and others.
+Similar cell types, such as Pro-B cells, Pre-B cells, and B cells, are closely clustered, indicating shared transcriptomic profiles.
+Diverse cell types like Epithelial cells, MSCs (Mesenchymal Stem Cells), and Hepatocytes are well-separated, suggesting strong transcriptional differences.
+Insight: SingleR successfully labels cells using reference datasets. However, further validation (e.g., marker gene expression) can confirm the annotation accuracy.
+### 2. Heatmap of Annotation Scores
+#### The heatmap visualizes the confidence scores for cell type assignments across cells, with yellow indicating higher confidence and blue/purple indicating lower scores.
+* Observations:
+* High confidence in assignments for distinct cell types like Epithelial cells, Fibroblasts, and Astrocytes suggests robust annotations.
+Some overlap or lower scores for closely related cell types (e.g., Pre-B cells and Pro-B cells) may indicate shared gene expression profiles or ambiguous annotations.
+Insight: High-confidence clusters highlight well-defined cell types, while lower scores might indicate potential misclassification or intermediate cell states.
