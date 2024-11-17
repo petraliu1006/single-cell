@@ -26,7 +26,7 @@
 - Distinct Cell Populations: Certain cell types like Mast cells and pDCs (plasmacytoid dendritic cells) appear as more distinct branches, reflecting their unique transcriptomic profiles.
 
 ### Overall Interpretation
-Your dataset appears to be well-annotated with diverse immune cell populations, along with some stromal and progenitor cells. The UMAP visualizations and dendrogram provide a coherent view of cellular diversity and relationships, suggesting that your annotation process was effective in capturing the main cell types and their respective lineages. However, the areas with lower confidence annotations might benefit from further refinement or additional reference datasets for improved classification.
+The dataset appears to be well-annotated with diverse immune cell populations, along with some stromal and progenitor cells. The UMAP visualizations and dendrogram provide a coherent view of cellular diversity and relationships, suggesting that your annotation process was effective in capturing the main cell types and their respective lineages. However, the areas with lower confidence annotations might benefit from further refinement or additional reference datasets for improved classification.
 
 
 ## R results
